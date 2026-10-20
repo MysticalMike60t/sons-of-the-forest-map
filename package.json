@@ -1,20 +1,16 @@
 {
   "name": "sons-of-the-forest-map",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev:overwolf": "vite -c vite-overwolf.config.ts",
     "dev:web": "vite -c vite-web.config.ts",
-    "build": "tsc && vite build -c vite-overwolf.config.ts && node scripts/copy-statics.mjs",
+    "build": "tsc && node scripts/copy-statics.mjs",
     "web": "tsc && vite build -c vite-web.config.ts && node scripts/prerender.mjs",
     "preview": "vite preview -c vite-web.config.ts",
-    "release": "node scripts/release-overwolf.mjs",
     "i18n": "node scripts/i18n.mjs"
   },
   "devDependencies": {
-    "@overwolf/ow-cli": "0.0.5-1",
-    "@overwolf/types": "3.24.3",
     "@translate-tools/core": "1.0.0",
     "@types/async": "3.2.24",
     "@types/js-cookie": "3.0.6",
@@ -34,7 +30,6 @@
     "js-cookie": "3.0.5",
     "leaflet": "1.9.4",
     "peerjs": "1.5.2",
-    "plausible-tracker": "0.3.8",
     "qrcode": "1.5.3",
     "reflect-metadata": "0.2.1",
     "throttle-debounce": "5.0.0",

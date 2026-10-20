@@ -12,8 +12,8 @@ export default function Map(container: HTMLDivElement) {
       : null;
 
   const map = leaflet.map(container, {
-    zoomControl: false,
-    attributionControl: false,
+    zoomControl: true,
+    attributionControl: true,
     minZoom: -4,
     maxZoom: 5,
     zoomSnap: 0.5,
@@ -31,7 +31,7 @@ export default function Map(container: HTMLDivElement) {
   const divElement = leaflet.DomUtil.create("div", "leaflet-position");
   const handleMouseMove = (event: leaflet.LeafletMouseEvent) => {
     divElement.innerHTML = `<span>[${event.latlng.lng.toFixed(
-      2
+      2,
     )}, ${event.latlng.lat.toFixed(2)}]</span>`;
   };
   const handleMouseOut = () => {
@@ -51,16 +51,6 @@ export default function Map(container: HTMLDivElement) {
 
   const coordinates = new CoordinatesControl({ position: "bottomleft" });
   coordinates.addTo(map);
-
-  if (typeof overwolf !== "undefined") {
-    overwolf.settings.hotkeys.onPressed.addListener((event) => {
-      if (event.name === "zoom_in_app") {
-        map.zoomIn();
-      } else if (event.name === "zoom_out_app") {
-        map.zoomOut();
-      }
-    });
-  }
 
   return map;
 }

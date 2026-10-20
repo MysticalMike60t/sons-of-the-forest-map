@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <!--PRELOAD_TEMPLATE-->
@@ -6,12 +6,6 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap"
-      rel="stylesheet"
     />
 
     <link
@@ -108,18 +102,6 @@
           </svg>
         </button>
         <div class="stack">
-          <a
-            href="https://www.th.gl/support-me"
-            target="_blank"
-            class="ad-note"
-            data-i18n
-            >Unlock our hidden treasury with your generous Patronage</a
-          >
-          <div id="sotf-video" class="nitro-video">
-            <div class="fallback" data-i18n>
-              Please deactivate your adblocker to support us.
-            </div>
-          </div>
           <section class="paper">
             <h2 data-i18n>Nodes</h2>
             <div class="types" id="filters">&nbsp;</div>
@@ -151,70 +133,6 @@
               your paths. Up to 5 recent sessions are saved.
             </p>
             <div id="game_sessions"></div>
-          </section>
-          <section class="paper">
-            <h2 data-i18n>Realtime Sync</h2>
-            <p class="description">
-              <span data-i18n>Install the</span>
-              <a
-                href="https://www.overwolf.com/app/Leon_Machens-Sons_Of_The_Forest_Map"
-                target="_blank"
-                data-i18n
-                >Overwolf app</a
-              >
-              <span data-i18n
-                >to sync your position. For multiplayer first connect to peer
-                sever, then link the app. The first ID is yours, to add friends
-                simply paste their ID's to the app.</span
-              >
-            </p>
-            <button id="peer_connect" data-i18n>Connect to peer server</button>
-            <p class="status issue" id="my_peer_status">
-              <span class="indicator"></span>
-              <span data-i18n>Connected to peer server</span>
-              <span data-i18n>Not connected to peer server</span>
-            </p>
-
-            <div class="group">
-              <label>
-                <span class="w-sm" data-i18n>Your ID</span>
-                <input type="text" id="peer_id" disabled />
-              </label>
-              <button id="copy_peer_id" data-i18n>Copy</button>
-            </div>
-            <p class="warning" id="peer_error"></p>
-            <form class="group" id="connection_form">
-              <label>
-                <span class="w-sm" data-i18n>App ID</span>
-                <input type="text" name="other_peer_id" required />
-              </label>
-              <input type="submit" value="Add player" />
-            </form>
-            <div id="connections"></div>
-            <p class="location-status" data-i18n>Location is not detected</p>
-            <button class="show-on-map" data-i18n>Show on map</button>
-            <label class="group">
-              <input
-                type="checkbox"
-                id="follow_location"
-                class="toggle-switch"
-              />
-              <label for="follow_location"></label>
-              <span data-i18n>Follow Location</span>
-            </label>
-            <p class="description" data-i18n>
-              Player marker auto-centers whenever it gets updated.
-            </p>
-            <div class="game-overlay hidden">
-              <span class="warning" data-i18n>Game is disabled!</span>
-              <p>
-                <span data-i18n>Open the</span>
-                <a href="overwolf://store/game-settings/game-id/22638" data-i18n
-                  >Overwolf settings</a
-                >
-                <span data-i18n>and activate Sons of the Forest.</span>
-              </p>
-            </div>
           </section>
           <section class="paper">
             <h2 data-i18n>Settings</h2>
@@ -251,25 +169,16 @@
               <label for="tp_toggle"></label>
               <span data-i18n>Show Teleporting</span>
             </label>
-            <p class="description" data-i18n>
-              Displays command for teleporting to the nodes.
-            </p>
             <label class="group">
               <input type="checkbox" id="tg_toggle" class="toggle-switch" />
               <label for="tg_toggle"></label>
               <span data-i18n>Show Togglego</span>
             </label>
-            <p class="description" data-i18n>
-              Displays command for hiding or showing water bodies.
-            </p>
             <label class="group">
               <input type="checkbox" id="itemid_toggle" class="toggle-switch" />
               <label for="itemid_toggle"></label>
               <span data-i18n>Show Item ID</span>
             </label>
-            <p class="description" data-i18n>
-              Displays command for spawning items.
-            </p>
             <label class="group">
               <input
                 type="checkbox"
@@ -287,21 +196,6 @@
               <label for="trace_line"></label>
               <span data-i18n>Show Trace Line</span>
             </label>
-            <p class="description" data-i18n>
-              Displays small dots behind you, saving your paths.
-            </p>
-            <label class="group">
-              <input
-                type="checkbox"
-                id="direction_line"
-                class="toggle-switch"
-              />
-              <label for="direction_line"></label>
-              <span data-i18n>Show Direction Line</span>
-            </label>
-            <p class="description" data-i18n>
-              Displays a line in walking direction.
-            </p>
             <label class="group">
               <input
                 type="checkbox"
@@ -342,40 +236,6 @@
                 id="iconSizeSlider"
               />
             </div>
-          </section>
-          <section class="links">
-            <p>
-              Take your gaming to new heights with accurate tracking, richly
-              detailed waypoints, and a sleek overlay for real-time progress.<br />
-              Ensure your privacy by reviewing our:
-              <a href="https://sotf.th.gl/privacy-policy.html" target="_blank"
-                >Privacy Policy</a
-              >
-              <br />
-              Find more gaming enchancements at:
-            </p>
-            <a href="https://www.th.gl/" target="_blank"
-              >The Hidden Gaming Lair</a
-            >
-            <a href="https://palia.th.gl/" target="_blank">Palia Map</a>
-            <a href="https://diablo4.th.gl/" target="_blank">Diablo 4 Map</a>
-            <a href="https://aeternum-map.th.gl/" target="_blank"
-              >New Wolrd Interactice Map</a
-            >
-            <a href="https://www.nwmap.info/" target="_blank"
-              >New World Territory Map</a
-            >
-            <a href="https://www.hogwarts.th.gl/" target="_blank"
-              >Hogwarts Legacy</a
-            >
-            <a href="https://www.arkesia.th.gl/" target="_blank">Lost Ark</a>
-            <a href="https://lol.th.gl/" target="_blank">League of Legend</a>
-            <a href="https://www.soc.th.gl/" target="_blank"
-              >Songs of Conquest</a
-            >
-            <a href="https://github.com/lmachens/skeleton" target="_blank"
-              >Customizable Overlays</a
-            >
           </section>
         </div>
       </aside>

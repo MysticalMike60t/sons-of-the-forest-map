@@ -26,24 +26,6 @@ export default function Zones({ map }: { map: leaflet.Map }) {
     }
   };
 
-  if (typeof overwolf !== "undefined") {
-    overwolf.settings.hotkeys.onPressed.addListener((event) => {
-      if (event.name === "toggle_zones_grid") {
-        if (showZones.checked) {
-          showZones.checked = false;
-          settings.setValue("showZones", false);
-          removeZones();
-          layerGroup.removeFrom(map);
-        } else {
-          showZones.checked = true;
-          settings.setValue("showZones", true);
-          drawZones();
-          layerGroup.addTo(map);
-        }
-      }
-    });
-  }
-
   function drawZones() {
     for (let i = 0; i < 25; i++) {
       for (let j = 0; j < 25; j++) {
@@ -62,7 +44,7 @@ export default function Zones({ map }: { map: leaflet.Map }) {
               opacity: 0.1,
               weight: 1,
               interactive: false,
-            }
+            },
           )
           .addTo(layerGroup);
         leaflet
@@ -75,11 +57,11 @@ export default function Zones({ map }: { map: leaflet.Map }) {
               icon: leaflet.divIcon({
                 className: "zone-label",
                 html: `${String.fromCharCode(97 + i)}${String.fromCharCode(
-                  97 + j
+                  97 + j,
                 )}`.toUpperCase(),
               }),
               interactive: false,
-            }
+            },
           )
           .addTo(layerGroup);
       }

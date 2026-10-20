@@ -4,10 +4,8 @@ import QRCode from "qrcode";
 import { createElement } from "../lib/elements";
 import { PlayerPosition } from "../lib/player-marker";
 import { copyToClipboard } from "../lib/utils";
-import Friend from "./Friend";
 
 export default function Multiplayer({
-  map,
   getLastPosition,
 }: {
   map: leaflet.Map;
@@ -27,7 +25,6 @@ export default function Multiplayer({
   let connections: {
     [id: string]: {
       conn: DataConnection;
-      friend: ReturnType<typeof Friend>;
     };
   } = {};
 
@@ -39,13 +36,11 @@ export default function Multiplayer({
     });
     connectionsElement.append(status);
 
-    const friend = Friend({ map });
-    connections[peer] = { conn, friend };
+    connections[peer] = { conn };
 
     return {
       remove: () => {
         status.remove();
-        friend.remove();
       },
     };
   }
@@ -57,7 +52,6 @@ export default function Multiplayer({
       document
         .querySelector(`#connection_${existingConn.conn.connectionId}`)
         ?.remove();
-      existingConn.friend.remove();
       delete connections[peer];
     }
   }
@@ -69,19 +63,6 @@ export default function Multiplayer({
       console.log("conn open", conn.connectionId);
       if (getLastPosition) {
         conn.send(getLastPosition());
-      }
-    });
-    conn.on("data", (data) => {
-      if (
-        data &&
-        typeof data === "object" &&
-        "location" in data &&
-        "rotation" in data
-      ) {
-        const payload = data as PlayerPosition;
-        if (connections[conn.peer]) {
-          connections[conn.peer].friend.updatePosition(payload);
-        }
       }
     });
     conn.on("close", () => {
@@ -105,7 +86,7 @@ export default function Multiplayer({
       });
     }
   }
-  setLink("https://sotf.th.gl/");
+  setLink("");
 
   let peer: Peer | null = null;
   peerConnect.onclick = () => {
@@ -119,7 +100,7 @@ export default function Multiplayer({
       status.classList.add("issue");
       status.classList.remove("ok");
       peerIdElement.value = "";
-      setLink("https://sotf.th.gl/");
+      setLink("");
       Object.keys(connections).forEach((peer) => {
         closeExistingConnection(peer);
       });
@@ -134,7 +115,7 @@ export default function Multiplayer({
       status.classList.add("ok");
       status.classList.remove("issue");
       peerIdElement.value = id;
-      setLink(`https://sotf.th.gl/?app_id=${id}`);
+      setLink(``);
     });
     peer.on("connection", (conn) => {
       console.log("peer connection", conn);

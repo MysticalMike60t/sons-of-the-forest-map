@@ -34,8 +34,8 @@ const DEFAULT_DESCRIPTION = `Free interactive map for Sons Of The Forest: ${mapL
 const indexMeta = generateMeta({
   title: "Sons Of The Forest Map",
   description: DEFAULT_DESCRIPTION,
-  url: "https://sotf.th.gl",
-  image: "https://sotf.th.gl/og-card.jpg",
+  url: "",
+  image: "/og-card.jpg",
 });
 const indexHTML = template.replace(`<!--PRELOAD_TEMPLATE-->`, indexMeta);
 fs.writeFileSync(toAbsolute(`../out/index.html`), indexHTML);
@@ -57,8 +57,8 @@ await async.eachLimit(mapLocations, 20, async (mapLocation) => {
     title: `${mapLocation.title} - Sons Of The Forest Map`,
     description:
       mapLocation.description || DEFAULT_DESCRIPTION,
-    url: `https://sotf.th.gl/locations/${mapLocation.id}`,
-    image: `https://sotf.th.gl/locations/${mapLocation.id}.webp`,
+    url: `/locations/${mapLocation.id}`,
+    image: `/locations/${mapLocation.id}.webp`,
   });
   const html = template.replace(`<!--PRELOAD_TEMPLATE-->`, meta);
 
@@ -118,9 +118,9 @@ function generateSitemap() {
   let sitemap = `<?xml version="1.0" encoding="UTF-8"?>`;
   sitemap += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
 
-  sitemap += `<url><loc>https://sotf.th.gl/</loc></url>`;
+  sitemap += `<url><loc>/</loc></url>`;
   for (const mapLocation of mapLocations) {
-    sitemap += `<url><loc>https://sotf.th.gl/locations/${mapLocation.id}</loc></url>`;
+    sitemap += `<url><loc>/locations/${mapLocation.id}</loc></url>`;
   }
 
   sitemap += `</urlset>`;

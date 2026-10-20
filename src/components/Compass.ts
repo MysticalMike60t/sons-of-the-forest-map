@@ -11,7 +11,7 @@ export default function Compass() {
     {
       className: "compass hidden",
     },
-    [compassNeedle]
+    [compassNeedle],
   );
   main.append(compass);
 
@@ -35,7 +35,7 @@ export default function Compass() {
   return {
     updateRotation: (rotation: number) => {
       compassNeedle.style.backgroundPositionX = `calc(50% + ${rotationToX(
-        rotation
+        rotation,
       )}px)`;
     },
   };

@@ -1,12 +1,12 @@
-import type { Mutate, StoreApi } from 'zustand';
+import type { Mutate, StoreApi } from "zustand";
 
 type StoreWithPersist<State = any> = Mutate<
   StoreApi<State>,
-  [['zustand/persist', State]]
+  [["zustand/persist", State]]
 >;
 
 export const withStorageDOMEvents = (store: StoreWithPersist) => {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return;
   }
   const storageEventCallback = (e: StorageEvent) => {
@@ -19,9 +19,9 @@ export const withStorageDOMEvents = (store: StoreWithPersist) => {
     }
   };
 
-  window.addEventListener('storage', storageEventCallback);
+  window.addEventListener("storage", storageEventCallback);
 
   return () => {
-    window.removeEventListener('storage', storageEventCallback);
+    window.removeEventListener("storage", storageEventCallback);
   };
 };

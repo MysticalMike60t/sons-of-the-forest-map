@@ -28,16 +28,16 @@ export const useSettingsStore = create(
       showTeleporting: true,
       showTogglego: true,
       showItemId: true,
-      showCompass: typeof overwolf !== "undefined",
+      showCompass: true,
       showTraceLine: true,
       showDirectionLine: true,
-      showIconBackground: true,
+      showIconBackground: false,
       showZones: false,
       iconSize: 18,
       setValue: (key, value) => set({ [key]: value }),
     }),
     {
       name: "settings-storage",
-    }
-  )
+    },
+  ),
 );
