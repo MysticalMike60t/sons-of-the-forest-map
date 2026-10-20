@@ -31,7 +31,7 @@ export const useSettingsStore = create(
       showCompass: true,
       showTraceLine: true,
       showDirectionLine: true,
-      showIconBackground: false,
+      showIconBackground: true,
       showZones: false,
       iconSize: 18,
       setValue: (key, value) => set({ [key]: value }),

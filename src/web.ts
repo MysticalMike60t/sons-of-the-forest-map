@@ -9,8 +9,13 @@ import TileLayer from "./components/TileLayer";
 import Zones from "./components/Zones";
 import { loadDictionary, translateHTML } from "./lib/i18n";
 import { initWakelock } from "./lib/wakelock";
-import { getCustomNodes, setCustomNodes } from "./lib/nodes";
-import { openFileOrFiles, saveFile } from "./lib/storage";
+import {
+  getCustomNodes,
+  setCustomNodes,
+  getDiscoveredNodeIDs,
+  setDiscoveredNodeIDs,
+} from "./lib/nodes";
+import { saveFile } from "./lib/storage";
 
 let lastLocation = { x: 0, y: 0, z: 0 };
 let lastRotation = 0;
@@ -18,6 +23,11 @@ let lastRotation = 0;
 function getLastPosition() {
   return { location: lastLocation, rotation: lastRotation };
 }
+
+type Backup = {
+  customNodes?: unknown;
+  discoveredNodeIDs?: unknown;
+};
 
 loadDictionary().then(() => {
   translateHTML();
@@ -34,42 +44,77 @@ loadDictionary().then(() => {
     getLastPosition,
     onAdd: refresh,
   });
+
+  // Backup: custom nodes + discovered nodes in one file
   document
     .querySelector<HTMLButtonElement>("#backup_custom_node")!
     .addEventListener("click", () => {
-      const customNodes = getCustomNodes();
-      const fileName = `Discovered_Nodes_${Date.now()}.json`;
-      const blob = new Blob([JSON.stringify(customNodes)], {
-        type: "text/json",
+      const backup = {
+        customNodes: getCustomNodes(),
+        discoveredNodeIDs: getDiscoveredNodeIDs(),
+      };
+      const blob = new Blob([JSON.stringify(backup)], {
+        type: "application/json",
       });
-      saveFile(blob, fileName);
+      saveFile(blob, `SOTF_Map_Backup_${Date.now()}.json`);
     });
+
+  // Restore: one persistent hidden file input, works in Firefox + Chromium
+  const restoreInput = document.createElement("input");
+  restoreInput.type = "file";
+  restoreInput.accept = ".json,application/json";
+  restoreInput.hidden = true;
+  document.body.append(restoreInput);
+
   document
     .querySelector<HTMLButtonElement>("#restore_custom_node")!
-    .addEventListener("click", async () => {
-      const file = await openFileOrFiles();
-      if (!file) {
-        return;
-      }
-      const reader = new FileReader();
-      reader.addEventListener("load", (loadEvent) => {
-        const text = loadEvent.target?.result;
-        if (!text || typeof text !== "string") {
-          return;
-        }
-        try {
-          let customNodes = JSON.parse(text);
-          if (!Array.isArray(customNodes)) {
-            customNodes = [];
-          }
-          setCustomNodes(customNodes);
-          refresh();
-        } catch (error) {
-          // Do nothing
-        }
-      });
-      reader.readAsText(file);
+    .addEventListener("click", () => {
+      restoreInput.value = ""; // allow picking the same file twice
+      restoreInput.click();
     });
+
+  restoreInput.addEventListener("change", async () => {
+    const file = restoreInput.files?.[0];
+    if (!file) {
+      return;
+    }
+    try {
+      const data = JSON.parse(await file.text()) as unknown;
+
+      // Old format: plain array of custom nodes
+      // New format: { customNodes, discoveredNodeIDs }
+      let customNodes: unknown = null;
+      let discoveredNodeIDs: unknown = null;
+      if (Array.isArray(data)) {
+        customNodes = data;
+      } else if (data && typeof data === "object") {
+        customNodes = (data as Backup).customNodes;
+        discoveredNodeIDs = (data as Backup).discoveredNodeIDs;
+      }
+
+      if (!Array.isArray(customNodes) && !Array.isArray(discoveredNodeIDs)) {
+        throw new Error("not a map backup file");
+      }
+
+      const parts: string[] = [];
+      if (Array.isArray(customNodes)) {
+        setCustomNodes(customNodes);
+        parts.push(`${customNodes.length} custom`);
+      }
+      if (Array.isArray(discoveredNodeIDs)) {
+        const ids = discoveredNodeIDs.filter(
+          (id): id is number => typeof id === "number",
+        );
+        setDiscoveredNodeIDs(ids);
+        parts.push(`${ids.length} discovered`);
+      }
+      refresh();
+      alert(`Restored ${parts.join(" + ")} nodes`);
+    } catch (error) {
+      console.error("Restore failed:", error);
+      alert(`Restore failed: ${(error as Error).message}`);
+    }
+  });
 
   ContextMenu({ map, onAdd: refresh });
   Filters({ onChange: refresh });

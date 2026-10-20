@@ -1,5 +1,5 @@
 import { t } from "./i18n";
-import _mapLocations from "./locations.json" assert { type: "json" };
+import _mapLocations from "./locations.json" with { type: "json" };
 export type MapLocation = {
   id: number;
   title: string;

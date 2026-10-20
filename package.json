@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev:web": "vite -c vite-web.config.ts",
-    "build": "tsc && node scripts/copy-statics.mjs",
+    "build": "tsc && vite build -c vite-web.config.ts",
     "web": "tsc && vite build -c vite-web.config.ts && node scripts/prerender.mjs",
     "preview": "vite preview -c vite-web.config.ts",
     "i18n": "node scripts/i18n.mjs"

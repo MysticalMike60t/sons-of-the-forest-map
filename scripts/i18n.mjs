@@ -3,7 +3,7 @@ import { readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { convert } from "html-to-text";
 import path from "node:path";
 import { fileURLToPath } from "url";
-import locations from "../src/lib/locations.json" assert { type: "json" };
+import locations from "../src/lib/locations.json" with { type: "json" };
 
 const locales = ["de", "pl", "pt-BR"];
 
